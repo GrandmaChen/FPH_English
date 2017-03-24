@@ -89,10 +89,10 @@ public class Bar {
 		this.inversionBoxExists = false;
 		this.chooseExists = false;
 		this.durationExists = false;
-		this.isAugFourth = new CheckBox("三全音算增四度");
-		this.play = new CheckBox("选中时弹奏和弦");
+		this.isAugFourth = new CheckBox("tri-tone is aug fourth");
+		this.play = new CheckBox("play when clicking");
 		this.play.setSelected(true);
-		this.duration = new ComboBox<String>(FXCollections.observableArrayList(new String[] { "全音符", "二分音符", "四分音符" }));
+		this.duration = new ComboBox<String>(FXCollections.observableArrayList(new String[] { "whole note", "half note", "quater note" }));
 		this.setDefaultDuration();
 		this.noteList = new ListGetter();
 		this.fph = new FourPartHarmony();
@@ -119,10 +119,10 @@ public class Bar {
 			if (!this.ChordtypeComboBox.getSelectionModel().isEmpty()) {
 				if (ChordtypeComboBox.getSelectionModel().getSelectedIndex() < 6) {
 					this.inversionBox = new ComboBox<String>(
-							FXCollections.observableArrayList(new String[] { "原位", "第1转位", "第2转位" }));
+							FXCollections.observableArrayList(new String[] { "root", "inversion 1", "inversion 2" }));
 				} else {
 					this.inversionBox = new ComboBox<String>(
-							FXCollections.observableArrayList(new String[] { "原位", "第1转位", "第2转位", "第3转位" }));
+							FXCollections.observableArrayList(new String[] { "root", "inversion 1", "inversion 2", "inversion 3" }));
 				}
 				if (this.inversionBoxExists) {
 					container.getChildren().set(3, this.inversionBox);
@@ -138,10 +138,10 @@ public class Bar {
 			if (!this.chordRootComboBox.getSelectionModel().isEmpty()) {
 				if (ChordtypeComboBox.getSelectionModel().getSelectedIndex() < 6) {
 					this.inversionBox = new ComboBox<String>(
-							FXCollections.observableArrayList(new String[] { "原位", "第1转位", "第2转位" }));
+							FXCollections.observableArrayList(new String[] {  "root", "inversion 1", "inversion 2"  }));
 				} else {
 					this.inversionBox = new ComboBox<String>(
-							FXCollections.observableArrayList(new String[] { "原位", "第1转位", "第2转位", "第3转位" }));
+							FXCollections.observableArrayList(new String[] { "root", "inversion 1", "inversion 2", "inversion 3" }));
 				}
 				if (this.inversionBoxExists) {
 					container.getChildren().set(3, this.inversionBox);
@@ -198,7 +198,7 @@ public class Bar {
 						this.durationExists = true;
 					}
 					if (!this.chooseExists) {
-						choose = new Button("请选择和弦");
+						choose = new Button("please choose chord");
 						this.container.getChildren().addAll(choose);
 						this.chooseExists = true;
 						choose.setOnAction(c -> {
@@ -237,21 +237,21 @@ public class Bar {
 					resultShowcaseTable.getColumns().addAll(bass, tenor, alto, soprano);
 
 					// Sorting buttons
-					Button deleteClose = getFilterButton("去除紧密排列");
-					Button deleteOpen = getFilterButton("去除开放排列");
-					Button onlyClose = getFilterButton("只要紧密排列");
-					Button onlyOpen = getFilterButton("只要开放排列");
-					Button noJumpToPrev = getFilterButtonRelatedToPrevOrNext("去除对前超过跳进音程", true);
-					Button noJumpToNext = getFilterButtonRelatedToPrevOrNext("去除对后超过跳进音程", false);
-					Button connectBassToPrev = getFilterButtonRelatedToPrevOrNext("对前低音连接", true);
-					Button connectBassToNext = getFilterButtonRelatedToPrevOrNext("对后低音连接", false);
-					Button connectTenorToPrev = getFilterButtonRelatedToPrevOrNext("对前次中音连接", true);
-					Button connectTenorToNext = getFilterButtonRelatedToPrevOrNext("对后次中音连接", false);
-					Button connectAltoToPrev = getFilterButtonRelatedToPrevOrNext("对前中音连接", true);
-					Button connectAltoToNext = getFilterButtonRelatedToPrevOrNext("对后中音连接", false);
-					Button connectSopranoToPrev = getFilterButtonRelatedToPrevOrNext("对前高音连接", true);
-					Button connectSopranoToNext = getFilterButtonRelatedToPrevOrNext("对后高音连接", false);
-					Button noMinor2nd = new Button("去除小二度");
+					Button deleteClose = getFilterButton("delete close");
+					Button deleteOpen = getFilterButton("delete open");
+					Button onlyClose = getFilterButton("only close");
+					Button onlyOpen = getFilterButton("only open");
+					Button noJumpToPrev = getFilterButtonRelatedToPrevOrNext("no jump from previous chord", true);
+					Button noJumpToNext = getFilterButtonRelatedToPrevOrNext("no jump to next chord", false);
+					Button connectBassToPrev = getFilterButtonRelatedToPrevOrNext("connect bass from previous chord", true);
+					Button connectBassToNext = getFilterButtonRelatedToPrevOrNext("connect bass to next chord", false);
+					Button connectTenorToPrev = getFilterButtonRelatedToPrevOrNext("connect tenor from previous chord", true);
+					Button connectTenorToNext = getFilterButtonRelatedToPrevOrNext("connect tenor to next chord", false);
+					Button connectAltoToPrev = getFilterButtonRelatedToPrevOrNext("connect alto from previous chord", true);
+					Button connectAltoToNext = getFilterButtonRelatedToPrevOrNext("connect alto to next chord", false);
+					Button connectSopranoToPrev = getFilterButtonRelatedToPrevOrNext("connect soprano from previous chord", true);
+					Button connectSopranoToNext = getFilterButtonRelatedToPrevOrNext("connect soprano to next chord", false);
+					Button noMinor2nd = new Button("no minor 2nd");
 					noMinor2nd.setOnAction(filter -> {
 						ObservableList<Chord> temp = FXCollections.observableArrayList();
 						for (Chord chord : resultShowcaseTable.getItems())
@@ -262,7 +262,7 @@ public class Bar {
 						for (Chord chord : resultShowcaseTable.getItems())
 							rangeTempChords.add(chord);
 					});
-					Button restore = new Button("还原");
+					Button restore = new Button("restore");
 					restore.setOnAction(e3 -> {
 						this.rangeTempChords.clear();
 						for (Chord chord : Filter.rangeFilter(this.rawChords, (int) lowerBoundSlider.getValue(),
@@ -274,8 +274,8 @@ public class Bar {
 					VBox list1 = new VBox();
 					VBox list2 = new VBox();
 					HBox list3 = new HBox();
-					Label connect = new Label("连接筛选");
-					Label interval = new Label("音程筛选");
+					Label connect = new Label("connect filters");
+					Label interval = new Label("interval filters");
 					list1.getChildren().addAll(connect, connectBassToNext, connectBassToPrev, connectTenorToNext,
 							connectTenorToPrev, connectAltoToNext, connectAltoToPrev, connectSopranoToNext,
 							connectSopranoToPrev, noMinor2nd);
@@ -284,8 +284,8 @@ public class Bar {
 					list3.getChildren().addAll(this.isAugFourth, this.play, restore);
 					TilePane sortFunctions = new TilePane();
 					sortFunctions.getChildren().addAll(list1, list2);
-					Label lowerBoundLabel = new Label("下限：");
-					Label upperBoundLabel = new Label("上限：");
+					Label lowerBoundLabel = new Label("lower bound：");
+					Label upperBoundLabel = new Label("upper bound：");
 					Label lowerBoundValue = new Label("A0");
 					Label upperBoundValue = new Label("C8");
 					lowerBoundSlider.setOrientation(Orientation.VERTICAL);
@@ -316,7 +316,7 @@ public class Bar {
 					this.tablePage.setBottom(bottom);
 					this.tablePage.setTop(imagePane);
 					this.chordSort = new Stage();
-					this.chordSort.setTitle("第" + this.barNum + "小节");
+					this.chordSort.setTitle("bar " + this.barNum );
 					this.chordEdit = new Scene(tablePage, 626, 558);
 					this.chordSort.setResizable(false);
 					this.chordSort.setScene(chordEdit);
@@ -376,37 +376,37 @@ public class Bar {
 					temp.add(chord);
 
 				switch (name) {
-				case "去除对前超过跳进音程":
+				case "no jump from previous chord":
 					Filter.JumpFilter(temp, this.prev.chosenResult);
 					break;
-				case "去除对后超过跳进音程":
+				case "no jump to next chord":
 					Filter.JumpFilter(temp, this.next.chosenResult);
 					break;
-				case "对前低音连接":
+				case "connect bass from previous chord":
 					Filter.connectPartFilter(temp, this.prev.chosenResult, 0);
 					break;
-				case "对后低音连接":
+				case "connect bass to next chord":
 					Filter.connectPartFilter(temp, this.next.chosenResult, 0);
 					break;
-				case "对前次中音连接":
+				case "connect tenor from previous chord":
 					Filter.connectPartFilter(temp, this.prev.chosenResult, 1);
 					break;
-				case "对后次中音连接":
+				case "connect tenor to next chord":
 					Filter.connectPartFilter(temp, this.next.chosenResult, 1);
 					break;
-				case "对前中音连接":
+				case "connect alto from previous chord":
 					Filter.connectPartFilter(temp, this.prev.chosenResult, 2);
 					break;
-				case "对后中音连接":
+				case "connect alto to next chord":
 					Filter.connectPartFilter(temp, this.next.chosenResult, 2);
 					break;
-				case "对前高音连接":
+				case "connect soprano from previous chord":
 					Filter.connectPartFilter(temp, this.prev.chosenResult, 3);
 					break;
-				case "对后高音连接":
+				case "connect soprano to next chord":
 					Filter.connectPartFilter(temp, this.next.chosenResult, 3);
 					break;
-				case "去除小二度":
+				case "no minor 2nd":
 					Filter.minor2ndFilter(temp);
 					break;
 				}
@@ -431,16 +431,16 @@ public class Bar {
 			resultShowcaseTable.setItems(Filter.onlyOpenFilter(temp, this.isAugFourth.isSelected()));
 
 			switch (name) {
-			case "去除紧密排列":
+			case "delete close":
 				Filter.deleteCloseFilter(temp, this.isAugFourth.isSelected());
 				break;
-			case "去除开放排列":
+			case "delete open":
 				Filter.deleteOpenFilter(temp, this.isAugFourth.isSelected());
 				break;
-			case "只要紧密排列":
+			case "only close":
 				resultShowcaseTable.setItems(Filter.onlyCloseFilter(temp, this.isAugFourth.isSelected()));
 				break;
-			case "只要开放排列":
+			case "only open":
 				resultShowcaseTable.setItems(Filter.onlyOpenFilter(temp, this.isAugFourth.isSelected()));
 				break;
 			}

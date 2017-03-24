@@ -11,16 +11,16 @@ public class TableColumnFactory {
 
 		switch (name) {
 		case "bass":
-			lable = "低音";
+			lable = "bass";
 			break;
 		case "tenor":
-			lable = "次中音";
+			lable = "tenor";
 			break;
 		case "alto":
-			lable = "中音";
+			lable = "alto";
 			break;
 		case "soprano":
-			lable = "高音";
+			lable = "soprano";
 			break;
 		}
 

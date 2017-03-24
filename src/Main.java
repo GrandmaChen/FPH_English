@@ -41,22 +41,22 @@ public class Main extends Application {
 		// Launch algorithm components
 		interpreter = new Interpreter();
 		window = primaryStage;
-		window.setTitle("四部和声计算器");
+		window.setTitle("Four-part Harmony Calculator");
 		// Page 1
 		HBox functionalButtons = new HBox();
-		next = new Button("下一步");
+		next = new Button("next");
 		next.setOnAction(e -> {
 			window.setScene(scene2);
 		});
-		inSharp = new CheckBox("按升号显示");
+		inSharp = new CheckBox("in sharp");
 		inSharp.setSelected(true);
 		functionalButtons.getChildren().addAll(next);
 		// Page 2
 		HBox buttons = new HBox();
 		barCount = 0;
-		saveAsMidi = new Button("保存音列文件");
-		saveAsText = new Button("保存文本文件");
-		load = new Button("读取和弦文件");
+		saveAsMidi = new Button("save as midi");
+		saveAsText = new Button("save as txt");
+		load = new Button("load chord file");
 		saveAsMidi.setOnAction(e -> {
 			Bar temp = head;
 			String toSave = "";
@@ -88,9 +88,9 @@ public class Main extends Application {
 			try {
 				if (!toSave.equals("")) {
 					FileChooser fileChooser = new FileChooser();
-					FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("MIDI 文件 (*.mid)", "*.mid");
+					FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("MIDI file", "*.mid");
 					fileChooser.getExtensionFilters().add(extFilter);
-					fileChooser.setTitle("保存音列文件");
+					fileChooser.setTitle("save midi");
 					File file = fileChooser.showSaveDialog(primaryStage);
 					MidiFileManager.savePatternToMidi(new Pattern(toSave.substring(0, toSave.length() - 1)), file);
 				}
@@ -104,9 +104,9 @@ public class Main extends Application {
 			BufferedWriter writer;
 			try {
 				FileChooser fileChooser = new FileChooser();
-				FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT 文件 (*.txt)", "*.txt");
+				FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT file", "*.txt");
 				fileChooser.getExtensionFilters().add(extFilter);
-				fileChooser.setTitle("保存文本文件");
+				fileChooser.setTitle("save midi");
 				File file = fileChooser.showSaveDialog(primaryStage);
 				writer = new BufferedWriter(new FileWriter(file));
 				while (temp.getNext() != null) {
@@ -138,9 +138,9 @@ public class Main extends Application {
 		});
 		load.setOnAction(e -> {
 			FileChooser fileChooser = new FileChooser();
-			FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+			FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT file", "*.txt");
 			fileChooser.getExtensionFilters().add(extFilter);
-			fileChooser.setTitle("打开和弦文件");
+			fileChooser.setTitle("open chord file");
 			File file = fileChooser.showOpenDialog(primaryStage);
 			while (barCount > 0) {
 				deleteBar();
@@ -168,8 +168,8 @@ public class Main extends Application {
 				e1.printStackTrace();
 			}
 		});
-		add = new Button("添加");
-		delete = new Button("删除");
+		add = new Button("add");
+		delete = new Button("delete");
 		buttons.getChildren().addAll(add, delete, saveAsMidi, saveAsText, load);
 		centreContainer = new TilePane();
 		centreContainer.setPadding(new Insets(5));
@@ -182,7 +182,7 @@ public class Main extends Application {
 		delete.setOnAction(e -> {
 			deleteBar();
 		});
-		playAll = new Button("播放所有小节");
+		playAll = new Button("play all");
 		playAll.setOnAction(e -> {
 			Bar temp = head;
 			while (temp.getNext() != null) {
